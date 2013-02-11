@@ -22,23 +22,25 @@
 # 複数出力（出力層３）
 
 function main()
-	randn('seed', 1);
+	randn('seed', 2);
 
 
-	xhani = -10:5:10;
-	yhani = -10:5:10;
+	## 教示データの作成
+	xhani = -10:3:10;
+	yhani = -10:3:10;
 	[xx yy] = meshgrid(xhani, yhani);
 	dat = [xx(:)'; yy(:)'];
-	ind1 = find(xx(:)<-3);
+	ind1 = find( (xx(:)<-3) & (yy(:)>-3));
 	ind2 = find(xx(:)> 3);
-	ind3 = find((xx(:)>=-3)&(xx(:)<=3));
+%	ind3 = find((xx(:)>=-3)&(xx(:)<=3));
+	ind3 = (setdiff(1:length(xx(:)),[ind1; ind2]))';
 	K1 = length(ind1);
 	K2 = length(ind2);
 	K3 = length(ind3);
 	x1 = [xx(ind1)'; yy(ind1)'; ones(1,K1); ones(1,K1); zeros(1,K1); zeros(1,K1)];
 	x2 = [xx(ind2)'; yy(ind2)'; ones(1,K2); zeros(1,K2); ones(1,K2); zeros(1,K2)];
 	x3 = [xx(ind3)'; yy(ind3)'; ones(1,K3); zeros(1,K3); zeros(1,K3); ones(1,K3)];
-	X = [x1 x2 x3];
+	X = [x1 x2 x3]; %データ [x;y;1;答え1;答え2;答え3]
 	
 	figure(1); clf;
 	hold on;
@@ -49,6 +51,7 @@ function main()
 	grid on;
 	
 	
+	%return;
 	#keyboard;
 	
 	
@@ -59,15 +62,14 @@ function main()
 	h2 = rand(3,1)*2-1;
 	h3 = rand(3,1)*2-1;
 	
-	k = 0.3;
+	k = 0.4;
 	
-	N = 300
+	N = 1000
 	for KK_ = 1:N
 		for II_ = 1:size(X,2)
 			%% 計算
 			x = X(:,II_);
 			%% 最終出力
-%keyboard;
 			[u g1 g2] = calcans(x, w1, w2, h1, h2, h3, @sigmo);
 			%%学習データ（正解値）
 			b = x(end-2:end); 
@@ -90,8 +92,8 @@ function main()
 		if mod(KK_,100)==0
 			KK_
 			%今のシステムの答えを見てみる
-%			cu = calcans(X, w1, w2, h1, h2, h3, @sigmo);
-			cu = calcans(X, w1, w2, h1, h2, h3, @getclass);
+			cu = calcans(X, w1, w2, h1, h2, h3, @sigmo);
+%			cu = calcans(X, w1, w2, h1, h2, h3, @getclass);
 			dis = [X(end-2:end,:); cu]
 			err = sum(sum(abs(X(end-2:end,:)- cu),1),2)
 		end
