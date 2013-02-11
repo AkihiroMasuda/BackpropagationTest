@@ -26,8 +26,8 @@ function main()
 
 
 	## 教示データの作成
-	xhani = -10:3:10;
-	yhani = -10:3:10;
+	xhani = -10:5:10;
+	yhani = -10:5:10;
 	[xx yy] = meshgrid(xhani, yhani);
 	dat = [xx(:)'; yy(:)'];
 	ind1 = find( (xx(:)<-3) & (yy(:)>-3));
@@ -63,9 +63,9 @@ function main()
 	h2 = rand(4,1)*2-1;
 	h3 = rand(4,1)*2-1;
 	
-	k = 0.3;
+	k = 0.2;
 	
-	N = 2000
+	N = 5000
 	for KK_ = 1:N
 		for II_ = 1:size(X,2)
 			%% 計算
