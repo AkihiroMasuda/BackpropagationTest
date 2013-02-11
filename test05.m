@@ -1,31 +1,30 @@
-## Copyright (C) 2013 akihiro
-## 
-## This program is free software; you can redistribute it and/or modify
-## it under the terms of the GNU General Public License as published by
-## the Free Software Foundation; either version 3 of the License, or
-## (at your option) any later version.
-## 
-## This program is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-## GNU General Public License for more details.
-## 
-## You should have received a copy of the GNU General Public License
-## along with Octave; see the file COPYING.  If not, see
-## <http://www.gnu.org/licenses/>.
+%% Copyright (C) 2013 akihiro
+%% 
+%% This program is free software; you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License as published by
+%% the Free Software Foundation; either version 3 of the License, or
+%% (at your option) any later version.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%% GNU General Public License for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% along with Octave; see the file COPYING.  If not, see
+%% <http://www.gnu.org/licenses/>.
 
-## test05
+%% test05
 
-## Author: akihiro <akihiro@MARCH>
-## Created: 2013-02-10
+%% Author: akihiro <akihiro@MARCH>
+%% Created: 2013-02-10
 
-# •¡”o—Íio—Í‘w‚Rj, ’†ŠÔ‘w‚ð‚R‚Â‚ÉB
+% •¡”o—Íio—Í‘w‚Rj, ’†ŠÔ‘w‚ð‚R‚Â‚ÉB
 
 function main()
 	randn('seed', 2);
 
-
-	## ‹³Ž¦ƒf[ƒ^‚Ìì¬
+	%% ‹³Ž¦ƒf[ƒ^‚Ìì¬
 	xhani = -10:5:10;
 	yhani = -10:5:10;
 	[xx yy] = meshgrid(xhani, yhani);
@@ -50,12 +49,10 @@ function main()
 	title('Answer');
 	grid on;
 	
-	
 	%return;
-	#keyboard;
+	%keyboard;
 	
-	
-	## ŒW”‰Šú‰»
+	%% ŒW”‰Šú‰»
 	w1 = rand(3,1)*2-1;
 	w2 = rand(3,1)*2-1;
 	w3 = rand(3,1)*2-1;
@@ -63,9 +60,9 @@ function main()
 	h2 = rand(4,1)*2-1;
 	h3 = rand(4,1)*2-1;
 	
-	k = 0.2;
+	k = 0.25; %2.5‚ªˆê”Ê“I‚ç‚µ‚¢
 	
-	N = 5000
+	N = 1000
 	for KK_ = 1:N
 		for II_ = 1:size(X,2)
 			%% ŒvŽZ
@@ -95,16 +92,12 @@ function main()
 		if mod(KK_,100)==0
 			KK_
 			%¡‚ÌƒVƒXƒeƒ€‚Ì“š‚¦‚ðŒ©‚Ä‚Ý‚é
-%			cu = calcans(X, w1, w2, h1, h2, h3, @sigmo);
-			cu = calcans(X, w1, w2, w3, h1, h2, h3, @sigmo);
-%			cu = calcans(X, w1, w2, h1, h2, h3, @getclass);
+			% cu = calcans(X, w1, w2, w3, h1, h2, h3, @sigmo);
+			cu = calcans(X, w1, w2, w3, h1, h2, h3, @getclass);
 			dis = [X(end-2:end,:); cu]
 			err = sum(sum(abs(X(end-2:end,:)- cu),1),2)
 		end
 	end
-	
-%	ans1 = cu(1) > 0.5;
-%	ans0 = cu(1) <= 0.5;
 	
 	% Œ‹‰Ê‚ð•`‰æ
 	xhani2 = -10:1:10; 
@@ -118,9 +111,6 @@ function main()
 	
 	figure(2); clf;
 	hold on;
-%	plot(X(1,ans1), X(2,ans1), 'bo');
-%	plot(X(1,ans0), X(2,ans0), 'mo');
-	
 	plot(X2(1,ans1_2), X2(2,ans1_2), 'b.');
 	plot(X2(1,ans2_2), X2(2,ans2_2), 'c.');
 	plot(X2(1,ans3_2), X2(2,ans3_2), 'm.');
